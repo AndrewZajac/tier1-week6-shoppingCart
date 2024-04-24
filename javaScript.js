@@ -36,6 +36,7 @@ function submitForm(event){
     //update the shopping list on the DOM
     renderShoppingCart();
     //update the remaining budget
+    renderRemainingBudget();
 }
 
 function renderShoppingCart(){
@@ -43,6 +44,7 @@ function renderShoppingCart(){
     //for every item in array, append a new list item with the name and price!
     const shoppingListElement = document.getElementById("shopping-list");
     shoppingListElement.innerHTML = '' //clears out all list items already there
+
     for(let i=0; i<cart.length; i++){
         console.log(cart[i]);//{name:'bananas', price:'10'}
         shoppingListElement.innerHTML += `
@@ -51,6 +53,25 @@ function renderShoppingCart(){
         </li>
         `
     }
+}
+
+function calculateRemaining(){
+    //sum up the total in the cart
+    let total = 0;
+for (const item of cart){
+    total += Number(item.price);
+}
+console.log(total);
+    //calculate the remaining budget
+    const remaining = budget - total;
+    return remaining;
+}
+
+function renderRemainingBudget(){
+    const remaining = calculateRemaining();
+    //update the DOM accordingly
+    const paraElement = document.getElementById("remaining");
+    paraElement.innerText = `${remaining} Remaining `;
 }
 
 
