@@ -6,6 +6,13 @@ const budget = 100.00;
 
 function onReady(){
     console.log('DOM is ready');
+
+    //update budget h2 with the correct amount
+    const budgetElement = document.getElementById("budget");
+    budgetElement.innerText = `Budget: $${budget}`;
+
+    //call the renderRemaining function to update remaining amount
+    renderRemainingBudget();
 }
 
 //form submit function
@@ -21,7 +28,7 @@ function submitForm(event){
     //build a new object with values from the user
     const newItem = {
         name: itemNameElement.value,
-        price: Number(itemPriceElement.value),
+        price: itemPriceElement.value,
     }
 
     console.log(newItem);
@@ -50,9 +57,20 @@ function renderShoppingCart(){
         shoppingListElement.innerHTML += `
         <li>
             <strong>Name:</strong> ${cart[i].name} <strong>Price:</strong> ${cart[i].price}
+            <button onclick="deleteItem(event)">Delete</button>
         </li>
         `
     }
+}
+
+function deleteItem(event){
+    //grab element that was clicked on (delete button)
+    const deleteButton = event.target;
+    console.log(deleteButton);
+
+    //find first ancestor and remove it
+    //which will, in turn, remove the <li> that this button is in
+    deleteButton.closest("li").remove();
 }
 
 function calculateRemaining(){
@@ -68,6 +86,7 @@ console.log(total);
 }
 
 function renderRemainingBudget(){
+    //calculate 
     const remaining = calculateRemaining();
     //update the DOM accordingly
     const paraElement = document.getElementById("remaining");
